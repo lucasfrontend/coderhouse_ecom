@@ -1,3 +1,10 @@
 .detail-container {
     padding-top: 6rem;
+    display: flex;
+    flex-direction: column;
+    .audio-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

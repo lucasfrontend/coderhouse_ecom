@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ItemCard } from "./ItemCard";
 import { gfetch } from '../../../helpers/gFetch'
+import { Audio } from 'react-loader-spinner'
 import "./ItemListContainer.scss"
 
 export const ItemListContainer = () => {
@@ -31,7 +32,22 @@ export const ItemListContainer = () => {
         <div className="container">
             <div className="flex">
                 {
-                    loading ? <h1>Cargando...</h1> : products.map(product => (<ItemCard key={product.id} product={product}/>))
+                    loading 
+                    
+                    ? 
+                        <div className="audio-container">
+                            <Audio
+                                height="180"
+                                width="180"
+                                radius="9"
+                                color="black"
+                                ariaLabel="loading"
+                                wrapperStyle
+                                wrapperClass
+                            /> 
+                        </div>
+                    : 
+                        products.map(product => (<ItemCard key={product.id} product={product}/>))
                 }
             </div>
         </div>

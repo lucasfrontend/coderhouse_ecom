@@ -1,3 +1,43 @@
-.item-detail{
-    padding-top: 6rem;
+.detail-card {
+    padding-top: 3rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    min-width: 15rem;
+    max-width: calc(12.5rem + 13vw);
+    background: #fff;
+    transition: transform 270ms ease;
+    position: relative;
+    .card-body {
+      height: 200px;
+      padding: 1em 0; 
+      img {
+        display: block;
+        max-width: 90%;
+        height: auto;
+        border-radius: 0.75em;
+        overflow: hidden;
+        box-shadow: 0 0.25em 0.6em #0005, 0 0.65em 1em #0004;
+      } 
+      .item-detail-name{
+        padding: 5px;
+        text-align: center;
+      }   
+    h3 {
+      text-align: center;
+      color: #999fff;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      color: #0009;
+      font-style: italic;
+      font-weight: 700;
+      text-align: center;
+      margin: 1em auto;
+      padding-inline: 0.5em;
+      max-width: 35ch;
+    }
+    }
+    
 }
