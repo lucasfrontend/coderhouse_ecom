@@ -1,0 +1,22 @@
+.item-container {
+    padding-top: 6rem;
+}
+
+.container {
+    margin: auto;
+    padding: 2em;
+    padding-top: 8rem;
+    max-width: 68rem;
+  }
+  
+  .flex {
+    display: flex;
+    gap: 2em;
+    justify-content: center;
+    flex-flow: row wrap;
+  }
+  
+  .flex > * {
+    flex-grow: 1;
+    flex-basis: 0;
+  }
