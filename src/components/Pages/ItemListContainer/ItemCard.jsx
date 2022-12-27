@@ -3,6 +3,12 @@ import { Link } from "react-router-dom";
 import "./ItemCard.scss"
 
 export const ItemCard = ({product}) => {
+    
+    const getPlatform = (platform) => {
+        return product.platforms.find((plat)=>{
+            return plat.platform.slug.includes(platform)
+        })
+    }
 
     return (
         <>

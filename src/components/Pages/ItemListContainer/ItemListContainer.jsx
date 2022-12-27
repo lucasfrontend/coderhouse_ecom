@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { ItemCard } from "./ItemCard";
 import { gfetch } from '../../../helpers/gFetch'
 import { Audio } from 'react-loader-spinner'
+import { collection, getDocs, getFirestore} from "firebase/firestore";
 import "./ItemListContainer.scss"
 
 export const ItemListContainer = () => {
@@ -10,22 +11,40 @@ export const ItemListContainer = () => {
     const [loading, setLoading] = useState(true);
 
     const { categoryId } = useParams();
+    const {storeId} = useParams()
 
-    useEffect(() => {
-        if(categoryId) {
-            gfetch()
-            .then(data => setProducts(data.filter(prod => prod.category === categoryId)))
-            .catch(err => console.log(err))
-            .finally(() => setLoading(false))            
-        } else {
-            gfetch()
-            .then(data => setProducts(data))
-            .catch(err => console.log(err))
-            .finally(() => setLoading(false))
+    const filterCategory = (productsData) => {
+        return productsData.filter(product => product.platforms.find(plat => {
+            return plat.platform.slug.includes(categoryId)
+        }))
+    }
 
-        }
-    }, [categoryId])
-    
+    const filterStore = (productsData) => {
+        return productsData.filter(product => product.stores.find(sto => {
+            return sto.store.slug.includes(storeId)
+        }))
+        
+    }
+
+    const db = getFirestore()
+    const queryCollection = collection(db, 'products')
+
+    useEffect(() =>{
+        getDocs(queryCollection)
+        .then((res) => {
+                if (categoryId) {
+                    if (storeId) { 
+                        setProducts(filterStore(filterCategory(res.docs.map(prod => ({id: prod.id, ...prod.data()})))))
+                    } else { 
+                        setProducts(filterCategory(res.docs.map(prod => ({id: prod.id, ...prod.data()}))))
+                    }
+                } else { 
+                    setProducts(res.docs.map(prod=> ({id: prod.id, ...prod.data()})))
+                }
+            }
+        )
+        .finally(() => setLoading(false))
+    },[categoryId, storeId])
     
     return (
         <>        

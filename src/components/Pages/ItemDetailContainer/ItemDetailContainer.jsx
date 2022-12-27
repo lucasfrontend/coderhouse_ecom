@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ItemCount } from "./ItemCount";
 import { ItemDetail } from "./ItemDetail";
-import {gfetch} from '../../../helpers/gFetch'
+import { doc, getDoc, getFirestore } from "firebase/firestore";
+//import {gfetch} from '../../../helpers/gFetch'
 import { Audio } from 'react-loader-spinner'
 import './ItemDetailContainer.scss'
 
@@ -12,9 +13,19 @@ export const ItemDetailContainer = () => {
     const [product, setProduct] = useState({});
     const [loading, setLoading] = useState(true);
 
-    const { productId } = useParams()
+    const {productId} = useParams()
+
+    const db = getFirestore()
+    const queryDoc = doc(db, 'games', productId)
+    useEffect(() =>{
+        getDoc(queryDoc)
+        .then(resp => setProduct({id: resp.id, ...resp.data()}))
+        .finally(() => setLoading(false))
+    },[])
+
     console.log("products", product)
 
+    /*
     useEffect(() => {
 
             gfetch()
@@ -23,6 +34,7 @@ export const ItemDetailContainer = () => {
             .finally(() => setLoading(false))           
 
     })
+    */
 
 
     return (

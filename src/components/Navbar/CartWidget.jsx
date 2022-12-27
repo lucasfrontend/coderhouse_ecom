@@ -1,10 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { useCartContext } from '../../context/CartContext'
 import './CartWidget.scss'
 
 export const CartWidget = () => {
 
+    const {cartQuant} = useCartContext()
+    
     return (
-        <div className="carrito">
+        <Link to="/cart" className="carrito">
             <div className="cart">
                 <svg viewBox="0 0 36 26">
                     <path d="M1 2.5H6L10 18.5H25.5L28.5 7.5L7.5 7.5" className="first" />
@@ -13,7 +17,7 @@ export const CartWidget = () => {
                     <path d="M14.5 13.5L16.5 15.5L21.5 10.5" class="tick" />
                 </svg>
             </div>
-            <div className="number">3</div>
-        </div>
+            <div className="number">{cartQuant > 0 && <span className="">{cartQuant}</span>}</div>
+        </Link>
     )
 }
